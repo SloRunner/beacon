@@ -207,8 +207,8 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
 
-        vSeeds.push_back(CDNSSeedData("1", "80.211.202.181"));         // Single node address
-        vSeeds.push_back(CDNSSeedData("2", "80.211.202.181"));         // Single node address
+        vSeeds.push_back(CDNSSeedData("1", "45.76.123.6"));         // Single node address
+        vSeeds.push_back(CDNSSeedData("2", "83.212.82.82"));         // Single node address
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet beacon addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet beacon script addresses start with '8' or '9'
