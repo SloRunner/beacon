@@ -58,12 +58,13 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
         (0, uint256("0x000001c4cc44c869aa98776e0802a274716661a54c16fedde8b7c509ef46e5a1"))
         (42139, uint256("0xabd6db4cfad725450ebf6657b96efd245cc6aa8f49025a10f43c02e66a830bf6"))
         (69281, uint256("0x821d5dc10299970ab4ef47d9525fc74b0203217fb6ab3bddf432ca73cf134e3d"))
-        (72027, uint256("0x2cb9695dfefa1307688c0c8949bb584ce7b7892eb493fb58b3da3f033fda5891"));
+        (72027, uint256("0x2cb9695dfefa1307688c0c8949bb584ce7b7892eb493fb58b3da3f033fda5891"))
+        (79265, uint256("0x01bad27b39a61ae444ca48f822381554975322c2a54a6e4ac464936035e9c296"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1546426051, // * UNIX timestamp of last checkpoint block
-    190019,          // * total number of transactions between genesis and last checkpoint
+    1546852248, // * UNIX timestamp of last checkpoint block
+    210176,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
 };
@@ -73,12 +74,13 @@ static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
         (0, uint256("0x3ff088781f162dd56e9e773bc697d31fb20ffba091aa6cb68d611c2af0040735"))
         (5211, uint256("0x0c703b89fca70b61bf5da0079eee2f472bb7b0eb746baf2dc6fbe45d401daa71"))
         (32270, uint256("0x8f23a4016afe1ce00f64d2131528bf1f019b25b27855389ce095dedcff49e174"))
-        (34567, uint256("0xb0b5f13a44d3481e81e49c5e3a662c0ebdce6d8510f38f5257256a45f51181d7"));
+        (34567, uint256("0xb0b5f13a44d3481e81e49c5e3a662c0ebdce6d8510f38f5257256a45f51181d7"))
+        (42027, uint256("0xc4c6f50c38aff685d6a303db82b61ca8554caec3130af0742d65f1e0409e2dff"));
 
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-    1546402967,
-    71842,
+    1546854438,
+    79227,
     5000};
 
 static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
