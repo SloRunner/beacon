@@ -3466,7 +3466,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
     int nHeight = pindex->nHeight;
 
 
-    if (block.IsProofOfStake()) {
+    if (block.IsProofOfStake() && nHeight > 106000) {
         LOCK(cs_main);
 
         CCoinsViewCache coins(pcoinsTip);
@@ -3487,7 +3487,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         }
 
         // if this is on a fork
-        if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL) {
+        if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL && nHeight > 106000) {
             // start at the block we're adding on to
             CBlockIndex *last = pindexPrev;
 
@@ -3503,7 +3503,6 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                             // if they spend the same input
                             if (stakeIn.prevout == in.prevout) {
                                 // reject the block
-                                LogPrintf("AcceptBlock() Spent input detected! %s == %s BLOCK REJECTED!", stakeIn.prevout.ToString(), in.prevout.ToString());
                                 return false;
                             }
                         }
