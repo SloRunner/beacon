@@ -59,12 +59,13 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
         (42139, uint256("0xabd6db4cfad725450ebf6657b96efd245cc6aa8f49025a10f43c02e66a830bf6"))
         (69281, uint256("0x821d5dc10299970ab4ef47d9525fc74b0203217fb6ab3bddf432ca73cf134e3d"))
         (72027, uint256("0x2cb9695dfefa1307688c0c8949bb584ce7b7892eb493fb58b3da3f033fda5891"))
-        (79265, uint256("0x01bad27b39a61ae444ca48f822381554975322c2a54a6e4ac464936035e9c296"));
+        (79265, uint256("0x01bad27b39a61ae444ca48f822381554975322c2a54a6e4ac464936035e9c296"))
+        (104151, uint256("0x21f716b8560aa6ca7eb15607a733bf893156461c012f5182542b6b823b03335a"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1546852248, // * UNIX timestamp of last checkpoint block
-    210176,          // * total number of transactions between genesis and last checkpoint
+    1548347582, // * UNIX timestamp of last checkpoint block
+    287527,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
 };
@@ -117,7 +118,7 @@ public:
         nMaturity = 15;
         nMasternodeCountDrift = 20;
         nMasternodeCollateralLimit = 10000;
-        nModifierUpdateBlock = 615800;
+        nModifierUpdateBlock = 106000; //fake stake upodate
         nMaxMoneyOut = 84000000 * COIN;
         const char* pszTimestamp = "When the Internet first came, I thought it was just the beacon of freedom - 2018";
         CMutableTransaction txNew;
@@ -202,7 +203,7 @@ public:
         nMaturity = 15;
         nMasternodeCountDrift = 4;
         nMasternodeCollateralLimit = 1000;
-        nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT
+        nModifierUpdateBlock = 68000; // fake stake update on testnet
         nMaxMoneyOut = 43199500 * COIN;
 
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
