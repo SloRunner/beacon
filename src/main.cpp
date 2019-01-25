@@ -3465,52 +3465,8 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
     int nHeight = pindex->nHeight;
 
-    if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (block.IsProofOfStake() && nHeight >= 501) {
-            LOCK(cs_main);
-            CCoinsViewCache coins(pcoinsTip);
-            if (!coins.HaveInputs(block.vtx[1])) {
-                // the inputs are spent at the chain tip so we should look at the recently spent outputs
-                for (CTxIn in : block.vtx[1].vin) {
-                    auto it = mapStakeSpent.find(in.prevout);
-                    if (it == mapStakeSpent.end()) {
-                        return false;
-                    }
-                    if (it->second <= pindexPrev->nHeight) {
-                        return false;
-                    }
-                }
-            }
-            // if this is on a fork
-            if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL && nHeight >= 501) {
-                // start at the block we're adding on to
-                CBlockIndex *last = pindexPrev;
-                // while that block is not on the main chain
-                while (!chainActive.Contains(last) && pindexPrev != NULL) {
-                    CBlock bl;
-                    ReadBlockFromDisk(bl, last);
-                    // loop through every spent input from said block
-                    for (CTransaction t : bl.vtx) {
-                        for (CTxIn in: t.vin) {
-                            // loop through every spent input in the staking transaction of the new block
-                            for (CTxIn stakeIn : block.vtx[1].vin) {
-                                // if they spend the same input
-                                if (stakeIn.prevout == in.prevout) {
-                                    // reject the block
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                    // go to the parent block
-                    last = pindexPrev->pprev;
-                }
-            }
-        }
-
-    }else{
-    //mainnet fix
-        if (block.IsProofOfStake() && nHeight > 106000) {
+    //mainnet fix fake stake
+        if (block.IsProofOfStake()) {
             LOCK(cs_main);
 
             CCoinsViewCache coins(pcoinsTip);
@@ -3555,7 +3511,6 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                 }
             }
         }
-    }
 
     // Write block to history file
     try {
