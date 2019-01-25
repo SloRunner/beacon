@@ -72,11 +72,7 @@ static const Checkpoints::CCheckpointData data = {
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
     boost::assign::map_list_of
-        (0, uint256("0x3ff088781f162dd56e9e773bc697d31fb20ffba091aa6cb68d611c2af0040735"))
-        (5211, uint256("0x0c703b89fca70b61bf5da0079eee2f472bb7b0eb746baf2dc6fbe45d401daa71"))
-        (32270, uint256("0x8f23a4016afe1ce00f64d2131528bf1f019b25b27855389ce095dedcff49e174"))
-        (34567, uint256("0xb0b5f13a44d3481e81e49c5e3a662c0ebdce6d8510f38f5257256a45f51181d7"))
-        (42027, uint256("0xc4c6f50c38aff685d6a303db82b61ca8554caec3130af0742d65f1e0409e2dff"));
+        (0, uint256("0x3ff088781f162dd56e9e773bc697d31fb20ffba091aa6cb68d611c2af0040735"));
 
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
@@ -193,6 +189,7 @@ public:
         pchMessageStart[3] = 0x78;
         vAlertPubKey = ParseHex("043e8760d1c9ef3af5a5e49796afe4389a5cb53c6028b54b9af0a152f34762e453615a1aab9260a31045b85f87d4de36bbe6fd04478fcc103fd47c8e1b813c3d3c");
         nDefaultPort = 39795;
+        nMaxReorganizationDepth = 100;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
@@ -202,26 +199,28 @@ public:
         nLastPOWBlock = 200;
         nMaturity = 15;
         nMasternodeCountDrift = 4;
-        nMasternodeCollateralLimit = 1000;
-        nModifierUpdateBlock = 68000; // fake stake update on testnet
+        nMasternodeCollateralLimit = 10000;
+        nModifierUpdateBlock = 500; // fake stake update on testnet
         nMaxMoneyOut = 43199500 * COIN;
 
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1544312158;
-        genesis.nNonce = 2394236;
+        genesis.hashPrevBlock = 0;
+        genesis.hashMerkleRoot = genesis.BuildMerkleTree();
+        genesis.nVersion = 1;
+        genesis.nTime = 1548384672;
+        genesis.nBits = 0x1e0ffff0;
+        genesis.nNonce = 519;
+
 
         hashGenesisBlock = genesis.GetHash();
 
-        assert(hashGenesisBlock == uint256("0x3ff088781f162dd56e9e773bc697d31fb20ffba091aa6cb68d611c2af0040735"));
+        assert(hashGenesisBlock == uint256("0x0000fba7e26b7f3d40dc6d726dc87a3fd94bfc26e6c57fa5c000a47300675e25"));
         assert(genesis.hashMerkleRoot == uint256("0x15e4c6108db65fcfe9a92603d445c9ed90062d3b213706e386d4808b9acc6710"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
 
         vSeeds.push_back(CDNSSeedData("1", "45.76.123.6"));         // Single node address
-        vSeeds.push_back(CDNSSeedData("2", "83.212.82.82"));         // Single node address
-        vSeeds.push_back(CDNSSeedData("3", "83.212.82.90"));    
-        vSeeds.push_back(CDNSSeedData("4", "83.212.82.44"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet beacon addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet beacon script addresses start with '8' or '9'
