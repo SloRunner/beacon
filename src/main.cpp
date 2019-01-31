@@ -2314,7 +2314,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         if (tx.IsCoinBase())
             continue;
         for (const CTxIn in: tx.vin) {
-            LogPrintf("mapStakeSpent: Insert %s | %u\n", in.prevout.ToString(), pindex->nHeight);
+            LogPrint("map", "mapStakeSpent: Insert %s | %u\n", in.prevout.ToString(), pindex->nHeight);
             mapStakeSpent.insert(std::make_pair(in.prevout, pindex->nHeight));
         }
     }
@@ -2323,7 +2323,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     // delete old entries
     for (auto it = mapStakeSpent.begin(); it != mapStakeSpent.end();) {
         if (it->second < pindex->nHeight - Params().MaxReorganizationDepth()) {
-            LogPrintf("mapStakeSpent: Erase %s | %u\n", it->first.ToString(), it->second);
+            LogPrint("map", "mapStakeSpent: Erase %s | %u\n", it->first.ToString(), it->second);
             it = mapStakeSpent.erase(it);
         }else{
             it++;
