@@ -4,7 +4,6 @@
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2018 LightPayCoin developers
 // Copyright (c) 2018 The Beacon developers
-// Implemented https://github.com/phoreproject/Phore/pull/133 (Fix block spam)
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -79,14 +78,6 @@ int64_t nReserveBalance = 0;
  * so it's still 10 times lower comparing to bitcoin.
  */
 CFeeRate minRelayTxFee = CFeeRate(10000);
-
-// maps any spent outputs in the past maxreorgdepth blocks to the height it was spent
-// this means for incoming blocks, we can check that their stake output was not spent before
-// the incoming block tried to use it as a staking input. We can also prevent block spam
-// attacks because then we can check that either the staking input is available in the current
-// active chain, or the staking input was spent in the past 100 blocks after the height
-// of the incoming block.
-map<COutPoint, int> mapStakeSpent;
 
 CTxMemPool mempool(::minRelayTxFee);
 
@@ -2073,9 +2064,6 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
                 if (coins->vout.size() < out.n + 1)
                     coins->vout.resize(out.n + 1);
                 coins->vout[out.n] = undo.txout;
-
-                // erase the spent input
-                mapStakeSpent.erase(out);
             }
         }
     }
@@ -2309,6 +2297,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         if (!pblocktree->WriteTxIndex(vPos))
             return state.Abort("Failed to write transaction index");
 
+<<<<<<< HEAD
     // add new entries
     for (const CTransaction tx: block.vtx) {
         if (tx.IsCoinBase())
@@ -2330,6 +2319,8 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         }
     }
 
+=======
+>>>>>>> parent of 38b934a... Fake stake fix (Phore)
     // add this block to the view's block chain
     view.SetBestBlock(pindex->GetBlockHash());
 
@@ -3465,6 +3456,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
     int nHeight = pindex->nHeight;
 
+<<<<<<< HEAD
     //mainnet fix fake stake
         if (block.IsProofOfStake()) {
             LOCK(cs_main);
@@ -3512,6 +3504,8 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             }
         }
 
+=======
+>>>>>>> parent of 38b934a... Fake stake fix (Phore)
     // Write block to history file
     try {
         unsigned int nBlockSize = ::GetSerializeSize(block, SER_DISK, CLIENT_VERSION);
