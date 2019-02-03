@@ -1702,7 +1702,7 @@ int64_t GetBlockValue(int nHeight)
         }else if (nHeight >= 20000){
             return 130 * COIN;
         }
-        return 0 * COIN;
+        return 100 * COIN;
     }
 
     if (nHeight == 0) {
@@ -3506,7 +3506,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         uint256 hash = block.GetHash();
         if(!mapProofOfStake.count(hash)) // add to mapProofOfStake
             mapProofOfStake.insert(make_pair(hash, hashProofOfStake));
-}
+    }
 
     if (!AcceptBlockHeader(block, state, &pindex))
         return false;
