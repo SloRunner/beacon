@@ -4,6 +4,7 @@
 // Copyright (c) 2015-2017 The PIVX developers
 // Copyright (c) 2018 LightPayCoin developers
 // Copyright (c) 2018 The Beacon developers
+// Implemented fix from 
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -3543,13 +3544,18 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             // Start at the block we're adding on to
             CBlockIndex *prev = pindexPrev;
             CTransaction &stakeTxIn = block.vtx[1];
+            int readBlock = 0;
             CBlock bl;
             // Go backwards on the forked chain up to the split
             do {
+                if(readBlock == Params().MaxReorganizationDepth()){
+                    // TODO: Remove this chain from disk.
+                    return error("%s: forked chain longer than maximum reorg limit", __func__);
+                }
                 if(!ReadBlockFromDisk(bl, prev))
                     // Previous block not on disk
                     return error("%s: previous block %s not on disk", __func__, prev->GetBlockHash().GetHex());
-
+                readBlock++;
 
                 // Loop through every input from said block
                 for (CTransaction t : bl.vtx) {
@@ -3696,7 +3702,7 @@ bool ProcessNewBlock(CValidationState& state, CNode* pfrom, CBlock* pblock, CDis
         CheckBlockIndex();
         if (!ret){
             // Check spamming
-            if(GetBoolArg("-blockspamfilter", DEFAULT_BLOCK_SPAM_FILTER)) {
+            if(pfrom && GetBoolArg("-blockspamfilter", DEFAULT_BLOCK_SPAM_FILTER)) {
                 CNodeState *nodestate = State(pfrom->GetId());
                 nodestate->nodeBlocks.onBlockReceived(pindex->nHeight);
                 bool nodeStatus = true;
