@@ -1619,12 +1619,9 @@ int64_t GetBlockValue(int nHeight)
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
         if (nHeight == 0){
             return 10000 * COIN;
+        }else{
+            return 100 * COIN;
         }
-        if (nHeight >= 67000)
-        {
-            return 1000 * COIN; //testnet is fun
-        }
-        return 100 * COIN;
     }
 
     if (nHeight == 0) {
@@ -2297,30 +2294,6 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         if (!pblocktree->WriteTxIndex(vPos))
             return state.Abort("Failed to write transaction index");
 
-<<<<<<< HEAD
-    // add new entries
-    for (const CTransaction tx: block.vtx) {
-        if (tx.IsCoinBase())
-            continue;
-        for (const CTxIn in: tx.vin) {
-            LogPrint("map", "mapStakeSpent: Insert %s | %u\n", in.prevout.ToString(), pindex->nHeight);
-            mapStakeSpent.insert(std::make_pair(in.prevout, pindex->nHeight));
-        }
-    }
-
-    
-    // delete old entries
-    for (auto it = mapStakeSpent.begin(); it != mapStakeSpent.end();) {
-        if (it->second < pindex->nHeight - Params().MaxReorganizationDepth()) {
-            LogPrint("map", "mapStakeSpent: Erase %s | %u\n", it->first.ToString(), it->second);
-            it = mapStakeSpent.erase(it);
-        }else{
-            it++;
-        }
-    }
-
-=======
->>>>>>> parent of 38b934a... Fake stake fix (Phore)
     // add this block to the view's block chain
     view.SetBestBlock(pindex->GetBlockHash());
 
@@ -5461,12 +5434,15 @@ int ActiveProtocol()
 {
 
     // SPORK_14 was used for 70710. Leave it 'ON' so they don't see < 70710 nodes. They won't react to SPORK_15
-    // messages because it's not in their code (enabled it for Fake Stake exploit, leave it on)
-
+    // messages because it's not in their code
+/*
     if (IsSporkActive(SPORK_14_NEW_PROTOCOL_ENFORCEMENT)) {
         if (chainActive.Tip()->nHeight >= Params().ModifierUpgradeBlock())
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
     }
+
+    return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
+*/
 
 
     // SPORK_15 is used for 70910. Nodes < 70910 don't see it and still get their protocol version via SPORK_14 and their 
