@@ -5607,7 +5607,7 @@ int ActiveProtocol()
     if (IsSporkActive(SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2))
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
 */
-    if (IsSporkActive(SPORK_17_FAKE_STAKE_FIX))
+    if (IsSporkActive(SPORK_17_FAKE_STAKE_FIX) && chainActive.Tip()->nHeight >= GetSporkValue(SPORK_17_FAKE_STAKE_FIX))
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
 
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
