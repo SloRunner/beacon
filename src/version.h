@@ -13,7 +13,7 @@
  * network protocol versioning
  */
 
-static const int PROTOCOL_VERSION = 71103;
+static const int PROTOCOL_VERSION = 71104;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 209;
@@ -22,8 +22,8 @@ static const int INIT_PROTO_VERSION = 209;
 static const int GETHEADERS_VERSION = 70077;
 
 //! disconnect from peers older than this proto version
-static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 71102;
-static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 71103;
+static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 71103;
+static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 71104;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this
@@ -41,6 +41,9 @@ static const int MEMPOOL_GD_VERSION = 60002;
 
 //! "filter*" commands are disabled without NODE_BLOOM after and including this version
 static const int NO_BLOOM_VERSION = 70005;
+
+//! fake stake was fixed in this version
+static const int FAKE_STAKE_FIX = 71103;
 
 
 #endif // BITCOIN_VERSION_H
