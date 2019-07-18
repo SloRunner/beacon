@@ -257,7 +257,7 @@ Value getblockval(const Array& params, bool fHelp)
     int nHeight = params[0].get_int();
     if (nHeight < 0 || nHeight > chainActive.Height())
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Block height out of range");
-    return GetBlockValue(nHeight);
+    return (double)(GetBlockValue(nHeight) / COIN);
 }
 
 Value getblock(const Array& params, bool fHelp)
