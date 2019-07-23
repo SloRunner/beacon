@@ -1694,17 +1694,6 @@ int64_t GetBlockValue(int nHeight)
 {
     int64_t nSubsidy = 0;
 
-    if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight == 0){
-            return 10000 * COIN;
-        }else if(nHeight >= 15000){
-            return 120 * COIN;
-        }else if (nHeight >= 20000){
-            return 130 * COIN;
-        }
-        return 100 * COIN;
-    }
-
     if (nHeight == 0) {
         nSubsidy = 1000000 * COIN;
     }   else if (nHeight <= 8600 && nHeight > 0) {
@@ -1723,52 +1712,20 @@ int64_t GetBlockValue(int nHeight)
         nSubsidy = 15 * COIN;
     }   else if (nHeight <= 335400 && nHeight > 249400) {
         nSubsidy = 12 * COIN;
-    }   else if (nHeight <= 450000 && nHeight > 335400) {
+    }   else if (nHeight <= 380000 && nHeight > 335400) {
         nSubsidy = 10 * COIN;
-    }   else if (nHeight <= 900000 && nHeight > 450000) {
-        nSubsidy = 9.1 * COIN;
-    }   else if (nHeight <= 1350000 && nHeight > 900000) {
-        nSubsidy = 8.281 * COIN;
-    }   else if (nHeight <= 1800000 && nHeight > 1350000) {
-        nSubsidy = 7.536 * COIN;
-    }   else if (nHeight <= 2250000 && nHeight > 1800000) {
-        nSubsidy = 6.857 * COIN;
-    }   else if (nHeight <= 2700000 && nHeight > 2250000) {
-        nSubsidy = 6.24 * COIN;
-    }   else if (nHeight <= 3150000 && nHeight > 2700000) {
-        nSubsidy = 5.679 * COIN;
-    }   else if (nHeight <= 3600000 && nHeight > 3150000) {
-        nSubsidy = 5.168 * COIN;
-    }   else if (nHeight <= 4050000 && nHeight > 3600000) {
-        nSubsidy = 4.703 * COIN;
-    }   else if (nHeight <= 4500000 && nHeight > 4050000) {
-        nSubsidy = 4.279 * COIN;
-    }   else if (nHeight <= 4950000 && nHeight > 4500000) {
-        nSubsidy = 3.894 * COIN;
-    }   else if (nHeight <= 5400000 && nHeight > 4950000) {
-        nSubsidy = 3.544 * COIN;
-    }   else if (nHeight <= 5850000 && nHeight > 5400000) {
-        nSubsidy = 3.225 * COIN;
-    }   else if (nHeight <= 6300000 && nHeight > 5850000) {
-        nSubsidy = 2.935 * COIN;
-    }   else if (nHeight <= 6750000 && nHeight > 6300000) {
-        nSubsidy = 2.67 * COIN;
-    }   else if (nHeight <= 7200000 && nHeight > 6750000) {
-        nSubsidy = 2.43 * COIN;
-    }   else if (nHeight <= 7650000 && nHeight > 7200000) {
-        nSubsidy = 2.211 * COIN;
-    }   else if (nHeight <= 8100000 && nHeight > 7650000) {
-        nSubsidy = 2.012 * COIN;
-    }   else if (nHeight <= 8550000 && nHeight > 8100000) {
-        nSubsidy = 1.831 * COIN;
-    }   else if (nHeight <= 9000000 && nHeight > 8550000) {
-        nSubsidy = 1.666 * COIN;
-    }   else if (nHeight <= 9450000 && nHeight > 9000000) {
-        nSubsidy = 1.516 * COIN;
-    }   else if (nHeight <= 10350000 && nHeight > 9450000) {
-        nSubsidy = 1.256 * COIN;
-    }   else if (nHeight <= 10800000 && nHeight > 10350000) {
-        nSubsidy = 1.143 * COIN;
+    }   else if (nHeight <= 430000 && nHeight > 380000) {
+        nSubsidy = 8 * COIN;
+    }   else if (nHeight <= 504000 && nHeight > 430000) {
+        nSubsidy = 6 * COIN;
+    }   else if (nHeight <= 954000 && nHeight > 504000) {
+        nSubsidy = 5 * COIN;
+    }   else if (nHeight <= 1404000 && nHeight > 954000) {
+        nSubsidy = 4 * COIN;
+    }   else if (nHeight <= 1854000 && nHeight > 1404000) {
+        nSubsidy = 3 * COIN;
+    }   else if (nHeight <= 2304000 && nHeight > 1854000) {
+        nSubsidy = 2 * COIN;
     }   else {
         nSubsidy = 1 * COIN;
     }
@@ -1788,15 +1745,6 @@ int64_t GetBlockValue(int nHeight)
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount)
 {
     int64_t ret = 0;
-    if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        if (nHeight >= 15000)
-        {
-            return blockValue * 0.99;
-        }else{
-            return blockValue * 0.8;
-        }
-    }
-
 
     if (nHeight < 101) {
         ret = blockValue * 0;
@@ -5592,7 +5540,7 @@ int ActiveProtocol()
     if (IsSporkActive(SPORK_17_FAKE_STAKE_FIX) && chainActive.Tip()->nHeight >= GetSporkValue(SPORK_17_FAKE_STAKE_FIX))
             return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
 */
-    if (IsSporkActive(SPORK_18_NEW_PROTOCOL_ENFORCEMENT))
+    if (IsSporkActive(SPORK_18_NEW_PROTOCOL_ENFORCEMENT) && chainActive.Tip()->nHeight >= GetSporkValue(SPORK_18_NEW_PROTOCOL_ENFORCEMENT))
         return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
 
     return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;

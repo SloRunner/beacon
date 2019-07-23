@@ -62,19 +62,20 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
         (79265, uint256("0x01bad27b39a61ae444ca48f822381554975322c2a54a6e4ac464936035e9c296"))
         (104151, uint256("0x21f716b8560aa6ca7eb15607a733bf893156461c012f5182542b6b823b03335a"))
         (108186, uint256("0xe8bf22c59957cfe1bb28173a65733bee4405f4d0068eab1121deafd36d2bcc54"))
-        (148015, uint256("0x76ada3d756154f1a1b45d381e65562c065b94c72b8bc53de01ed97a0e43a6181"));
+        (148015, uint256("0x76ada3d756154f1a1b45d381e65562c065b94c72b8bc53de01ed97a0e43a6181"))
+        (360809, uint256("0x21d1950ef5120ff7daf6aee77cbc2a6f83bf903c6f296cbf53bc01ae16d72da7"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1551009788, // * UNIX timestamp of last checkpoint block
-    434008,          // * total number of transactions between genesis and last checkpoint
+    1563915304, // * UNIX timestamp of last checkpoint block
+    901509,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
 };
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
     boost::assign::map_list_of
-        (0, uint256("0x3ff088781f162dd56e9e773bc697d31fb20ffba091aa6cb68d611c2af0040735"));
+        (0, uint256("0x001"));
 
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
@@ -117,7 +118,7 @@ public:
         nMasternodeCountDrift = 20;
         nMasternodeCollateralLimit = 10000;
         nModifierUpdateBlock = 106000; //fake stake upodate
-        nMaxMoneyOut = 84000000 * COIN;
+        nMaxMoneyOut = 36250000 * COIN;
         const char* pszTimestamp = "When the Internet first came, I thought it was just the beacon of freedom - 2018";
         CMutableTransaction txNew;
         txNew.vin.resize(1);
@@ -224,8 +225,6 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-
-        vSeeds.push_back(CDNSSeedData("1", "45.76.123.6"));         // Single node address
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 139); // Testnet beacon addresses start with 'x' or 'y'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 19);  // Testnet beacon script addresses start with '8' or '9'
